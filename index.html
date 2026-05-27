@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.6">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="ru"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;CS2 Case Opening&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Подключаем скрипт Telegram Web Apps API --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://telegram.org/js/telegram-web-app.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #1a1b26;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>user-select: none;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #f3a91c;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-shadow: 0 2px 4px rgba(0,0,0,0.5);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.user-info {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #24273a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 10px rgba(0,0,0,0.3);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Рулетка */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.roulette-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 120px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #1e2030;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: 2px solid #2d3149;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: inset 0 0 20px rgba(0,0,0,0.8);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Маркер центра */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.pointer {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #ff4a4a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>z-index: 10;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 0 10px #ff4a4a;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.roulette-tape {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>top: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>will-change: transform;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.weapon-card {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 90px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 100px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #24273a;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.weapon-card img {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 70px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 50px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>object-fit: contain;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Редкости */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.mil-spec { border-bottom: 4px solid #4b69ff; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.restricted { border-bottom: 4px solid #8847ff; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.classified { border-bottom: 4px solid #d32ce6; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.covert { border-bottom: 4px solid #eb4b4b; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.special { border-bottom: 4px solid #e4ae39; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Кнопка */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.open-btn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(135deg, #e4ae39 0%, #b8830e 100%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #000;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>padding: 15px 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 15px rgba(228, 174, 57, 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.1s;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.open-btn:active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(0.95);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>.open-btn:disabled {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #555;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #aaa;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: not-allowed;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Лог дропа */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.drop-result {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-size: 18px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: bold;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>min-height: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1 id="case-title"&gt;Кейс «Киловатт»&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="user-info"&gt;Баланс: &lt;span id="balance"&gt;1000&lt;/span&gt;$&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="roulette-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="pointer"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="roulette-tape" id="tape"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="open-btn" id="open-btn" onclick="openCase()"&gt;Открыть за 2.50$&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="drop-result" id="drop-result"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Инициализация Telegram Web App</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const tg = window.Telegram.WebApp;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>tg.expand(); // Разворачиваем на весь экран</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Список оружия в кейсе (армейское, запрещенное, засекреченное, тайное, ножи)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const items = [</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "Dual Berettas", price: "0.10", rarity: "mil-spec", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kZ-HHAtoLwMforP9FAVu7F73ci9P79m4kterxa6gY-6JwDsBvccg3OyXp9Wi2gW3-xcoNTumdY_DIw9vYV_YrFS_kPC705_v75vOzXBh6HQj-z-dyCGm00wQ" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "Tec-9 | Slag", price: "0.15", rarity: "mil-spec", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX45V7lPAlo6g0NfL6pLw9u0P33dTvXb9S0y9bXwPLgYr_XwD8EvsAg0r_Dp9ukjQXg_hA4YmvyI9WdI1I6YV3ZqFPrlOi7h8Xv6p_MyiN963Vwvw" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "MAC-10 | Light Box", price: "0.50", rarity: "restricted", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4ksbXLFwocg0NfOfpLA9v7Fv3ejvGfSTUy9bXki7itYOmIgz4GvJ0m27-X99Sg3AW-rkRtY23dY-fIA89MAlGEq16vle7m0Me0v8ifmgA3dlv9Ww" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "AWP | Chrome Cannon", price: "45.00", rarity: "classified", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kb3XLA8p4gVNfOfpLQ9v7Fv3fii_bS0y49bXli7itYOuKz2oBu8YgiLyXo96giwW1-RA5YzvccY-dJw9vYF6D-FHrlOi7g8Xv6p7MznA163VsMg" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "AK-47 | Inheritance", price: "120.00", rarity: "covert", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kbnXLE9p4g0NfOfpLA9v7Fv3diOfeS0W4_bXki7itYOmKwzgGvJ0k3b2X-9SgjAW_qkRtZ23dY-eKBlEGaV_tle-b_MXE7MTqwg" },</p>
+<p class="p1"><span class="Apple-converted-space">            </span>{ name: "Kukri Knife | Fade", price: "800.00", rarity: "special", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kd3XLEhp4gVNfOfpLQ9v7Fv3fii_bS0S74tbfkZ6klOfiyyvXIkG038Mg076Tpt6siwXg_0A-Z2unJ9eddVBoYQrS_gS_lOi7g8Xv6p6bm3A3vHQjvw" }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>];</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>let balance = 1000.00;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const casePrice = 2.50;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const tape = document.getElementById('tape');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const openBtn = document.getElementById('open-btn');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const dropResult = document.getElementById('drop-result');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const balanceEl = document.getElementById('balance');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const cardWidth = 100; // 90px + 10px margin</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Заполняем ленту случайными пушками при старте</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function generateTape() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tape.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; 50; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const randomItem = items[Math.floor(Math.random() * items.length)];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const card = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.className = `weapon-card ${randomItem.rarity}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>card.innerHTML = `&lt;img src="${randomItem.img}"&gt;&lt;br&gt;${randomItem.name}`;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tape.appendChild(card);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function openCase() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (balance &lt; casePrice) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>alert("Недостаточно баланса!");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>balance -= casePrice;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>balanceEl.innerText = balance.toFixed(2);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>openBtn.disabled = true;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>dropResult.innerText = "";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Генерируем новую ленту, чтобы обновить картинки</p>
+<p class="p1"><span class="Apple-converted-space">            </span>generateTape();</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Сбрасываем анимацию</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tape.style.transition = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>tape.style.transform = 'translateX(0px)';</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Выбираем победный предмет (пусть будет 35-й в ленте)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const winningIndex = 35;<span class="Apple-converted-space"> </span></p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Шансы: подкрутим так, чтобы нож выпадал редко</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const roll = Math.random() * 100;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>let winningItem;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (roll &lt; 70) winningItem = items[Math.floor(Math.random() * 2)]; // Ширпотреб (70%)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else if (roll &lt; 90) winningItem = items[2]; // Запрещенка (20%)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else if (roll &lt; 97) winningItem = items[3]; // Засекреченное (7%)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else if (roll &lt; 99.5) winningItem = items[4]; // Тайное (2.5%)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>else winningItem = items[5]; // НОЖ! (0.5%)</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Подменяем 35-ю карточку на наш выигрыш</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const cards = tape.children;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cards[winningIndex].className = `weapon-card ${winningItem.rarity}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cards[winningIndex].innerHTML = `&lt;img src="${winningItem.img}"&gt;&lt;br&gt;${winningItem.name}`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Рассчитываем сдвиг ленты, чтобы выигравший предмет встал по центру</p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Контейнер 350px, центр — 175px.<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const targetLeft = -(winningIndex * cardWidth) + (175 - cardWidth / 2);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Запускаем крутилку (через таймаут, чтобы сброс transition успел сработать)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tape.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>tape.style.transform = `translateX(${targetLeft}px)`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 50);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// Ждем окончания анимации (4 секунды)</p>
+<p class="p1"><span class="Apple-converted-space">            </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>openBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dropResult.innerText = `Выпало: ${winningItem.name} (${winningItem.price}$)`;</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>// Вибрация в Telegram при выигрыше!</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (tg.HapticFeedback) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>tg.HapticFeedback.notificationOccurred(winningItem.rarity === 'special' ? 'success' : 'warning');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}, 4100);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Инициализация при загрузке</p>
+<p class="p1"><span class="Apple-converted-space">        </span>generateTape();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
