@@ -3,248 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 Case Opening</title>
-    <!-- Подключаем скрипт Telegram Web Apps API -->
+    <title>Skinoz Clone TMA</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #1a1b26;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #0f111a;
             color: #fff;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            height: 100vh;
+            overflow: hidden;
             user-select: none;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            color: #f3a91c;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        /* Шапка */
+        .header {
+            background: #161925;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #23283b;
         }
-
-        .user-info {
-            background: #24273a;
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        .balance-container {
+            font-size: 18px;
             font-weight: bold;
+            color: #e4ae39;
+            background: rgba(228, 174, 57, 0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid rgba(228, 174, 57, 0.3);
         }
 
-        /* Рулетка */
+        /* Контентные экраны */
+        .screen {
+            flex: 1;
+            display: none;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+            padding-bottom: 90px; /* Чтобы нижнее меню не перекрывало контент */
+        }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ЭКРАН 1: КЛИКЕР */
+        .clicker-circle {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #2a2f45 0%, #161925 100%);
+            border-radius: 50%;
+            margin-top: 40px;
+            border: 5px solid #e4ae39;
+            box-shadow: 0 0 25px rgba(228, 174, 57, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.05s;
+        }
+        .clicker-circle:active {
+            transform: scale(0.95);
+        }
+        .clicker-circle img {
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+        }
+
+        /* ЭКРАН 2: КЕЙСЫ (Рулетка из прошлого шага) */
         .roulette-container {
             position: relative;
             width: 100%;
             max-width: 350px;
-            height: 120px;
-            background: #1e2030;
-            border: 2px solid #2d3149;
+            height: 110px;
+            background: #161925;
+            border: 2px solid #23283b;
             border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            margin: 20px 0;
         }
-
-        /* Маркер центра */
         .pointer {
             position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: #ff4a4a;
-            z-index: 10;
-            box-shadow: 0 0 10px #ff4a4a;
+            top: 0; left: 50%; transform: translateX(-50%);
+            width: 4px; height: 100%; background: #eb4b4b; z-index: 10;
         }
-
         .roulette-tape {
-            display: flex;
-            position: absolute;
-            left: 0;
-            top: 10px;
-            height: 100px;
+            display: flex; position: absolute; left: 0; top: 5px; height: 100px;
             transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
-            will-change: transform;
+        }
+        .weapon-card {
+            width: 90px; height: 95px; margin: 0 5px; background: #1c1f30;
+            border-radius: 6px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-size: 10px; text-align: center; flex-shrink: 0;
+        }
+        .weapon-card img { width: 65px; height: 45px; object-fit: contain; }
+        .mil-spec { border-bottom: 3px solid #4b69ff; }
+        .covert { border-bottom: 3px solid #eb4b4b; }
+        .special { border-bottom: 3px solid #e4ae39; }
+
+        .open-btn {
+            background: #e4ae39; color: #000; border: none; padding: 12px 30px;
+            font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer;
+        }
+        .open-btn:disabled { background: #444; color: #888; }
+
+        /* ЭКРАН 3: ПРОФИЛЬ */
+        .stats-card {
+            background: #161925; width: 100%; padding: 15px;
+            border-radius: 10px; border: 1px solid #23283b; margin-top: 15px;
         }
 
-        .weapon-card {
-            width: 90px;
-            height: 100px;
-            margin: 0 5px;
-            background: #24273a;
-            border-radius: 6px;
+        /* НИЖНЕЕ МЕНЮ (НАВИГАЦИЯ) */
+        .nav-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            height: 70px;
+            background: #161925;
+            border-top: 1px solid #23283b;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-bottom: env(safe-area-inset-bottom); /* Поддержка челок iPhone */
+        }
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            text-align: center;
-            box-sizing: border-box;
-            padding: 5px;
-            flex-shrink: 0;
-        }
-
-        .weapon-card img {
-            width: 70px;
-            height: 50px;
-            object-fit: contain;
-        }
-
-        /* Редкости */
-        .mil-spec { border-bottom: 4px solid #4b69ff; }
-        .restricted { border-bottom: 4px solid #8847ff; }
-        .classified { border-bottom: 4px solid #d32ce6; }
-        .covert { border-bottom: 4px solid #eb4b4b; }
-        .special { border-bottom: 4px solid #e4ae39; }
-
-        /* Кнопка */
-        .open-btn {
-            background: linear-gradient(135deg, #e4ae39 0%, #b8830e 100%);
-            color: #000;
-            border: none;
-            padding: 15px 40px;
-            font-size: 18px;
-            font-weight: bold;
-            border-radius: 8px;
+            color: #8a8f9d;
+            font-size: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(228, 174, 57, 0.4);
-            transition: transform 0.1s;
+            text-decoration: none;
+            width: 25%;
         }
-
-        .open-btn:active {
-            transform: scale(0.95);
+        .nav-item.active {
+            color: #e4ae39;
         }
-
-        .open-btn:disabled {
-            background: #555;
-            color: #aaa;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
-        /* Лог дропа */
-        .drop-result {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            min-height: 24px;
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="case-title">Кейс «Киловатт»</h1>
-    <div class="user-info">Баланс: <span id="balance">1000</span>$</div>
-
-    <div class="roulette-container">
-        <div class="pointer"></div>
-        <div class="roulette-tape" id="tape"></div>
+    <div class="header">
+        <div id="username">Игрок</div>
+        <div class="balance-container"><span id="balance">0.00</span> $</div>
     </div>
 
-    <button class="open-btn" id="open-btn" onclick="openCase()">Открыть за 2.50$</button>
-    <div class="drop-result" id="drop-result"></div>
+    <div id="screen-clicker" class="screen active">
+        <h2>Тапай и зарабатывай</h2>
+        <p>Каждый клик дает +0.10$</p>
+        <div class="clicker-circle" onclick="earnCoins(event)">
+            <span style="font-size: 64px;">📦</span>
+        </div>
+    </div>
+
+    <div id="screen-cases" class="screen">
+        <h2>Магазин кейсов</h2>
+        <p>Стоимость открытия: 5.00$</p>
+        <div class="roulette-container">
+            <div class="pointer"></div>
+            <div class="roulette-tape" id="tape"></div>
+        </div>
+        <button class="open-btn" id="open-btn" onclick="openCase()">Открыть кейс</button>
+        <div id="drop-result" style="margin-top: 15px; font-weight: bold; min-height: 20px;"></div>
+    </div>
+
+    <div id="screen-profile" class="screen">
+        <h2>Твой профиль</h2>
+        <div class="stats-card">
+            <p>Всего кликов: <span id="stat-clicks">0</span></p>
+            <p>Кейсов открыто: <span id="stat-cases">0</span></p>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <div class="nav-item active" onclick="switchScreen('clicker', this)">
+            <div class="nav-icon">👆</div>
+            <div>Кликер</div>
+        </div>
+        <div class="nav-item" onclick="switchScreen('cases', this)">
+            <div class="nav-icon">🔥</div>
+            <div>Кейсы</div>
+        </div>
+        <div class="nav-item" onclick="switchScreen('profile', this)">
+            <div class="nav-icon">👤</div>
+            <div>Профиль</div>
+        </div>
+    </div>
 
     <script>
-        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Разворачиваем на весь экран
+        tg.expand();
 
-        // Список оружия в кейсе (армейское, запрещенное, засекреченное, тайное, ножи)
+        // Отображаем имя пользователя из Telegram
+        if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            document.getElementById('username').innerText = tg.initDataUnsafe.user.first_name;
+        }
+
+        // Игровая статистика (состояние)
+        let balance = 0.00;
+        let totalClicks = 0;
+        let totalCasesOpened = 0;
+
+        const casePrice = 5.00;
         const items = [
-            { name: "Dual Berettas", price: "0.10", rarity: "mil-spec", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kZ-HHAtoLwMforP9FAVu7F73ci9P79m4kterxa6gY-6JwDsBvccg3OyXp9Wi2gW3-xcoNTumdY_DIw9vYV_YrFS_kPC705_v75vOzXBh6HQj-z-dyCGm00wQ" },
-            { name: "Tec-9 | Slag", price: "0.15", rarity: "mil-spec", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX45V7lPAlo6g0NfL6pLw9u0P33dTvXb9S0y9bXwPLgYr_XwD8EvsAg0r_Dp9ukjQXg_hA4YmvyI9WdI1I6YV3ZqFPrlOi7h8Xv6p_MyiN963Vwvw" },
-            { name: "MAC-10 | Light Box", price: "0.50", rarity: "restricted", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4ksbXLFwocg0NfOfpLA9v7Fv3ejvGfSTUy9bXki7itYOmIgz4GvJ0m27-X99Sg3AW-rkRtY23dY-fIA89MAlGEq16vle7m0Me0v8ifmgA3dlv9Ww" },
-            { name: "AWP | Chrome Cannon", price: "45.00", rarity: "classified", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kb3XLA8p4gVNfOfpLQ9v7Fv3fii_bS0y49bXli7itYOuKz2oBu8YgiLyXo96giwW1-RA5YzvccY-dJw9vYF6D-FHrlOi7g8Xv6p7MznA163VsMg" },
-            { name: "AK-47 | Inheritance", price: "120.00", rarity: "covert", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kbnXLE9p4g0NfOfpLA9v7Fv3diOfeS0W4_bXki7itYOmKwzgGvJ0k3b2X-9SgjAW_qkRtZ23dY-eKBlEGaV_tle-b_MXE7MTqwg" },
-            { name: "Kukri Knife | Fade", price: "800.00", rarity: "special", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYg45Q16k65v5pLysLT16453547L34cO7_Irf4VCM3IDnqMV40I57fTHOfXbuX4kd3XLEhp4gVNfOfpLQ9v7Fv3fii_bS0S74tbfkZ6klOfiyyvXIkG038Mg076Tpt6siwXg_0A-Z2unJ9eddVBoYQrS_gS_lOi7g8Xv6p6bm3A3vHQjvw" }
+            { name: "P250 | Sand Dune", price: "0.03", rarity: "mil-spec", img: "berettas.png" },
+            { name: "AK-47 | Inheritance", price: "120.00", rarity: "covert", img: "ak47.png" },
+            { name: "Kukri Knife | Fade", price: "800.00", rarity: "special", img: "kukri.png" }
         ];
 
-        let balance = 1000.00;
-        const casePrice = 2.50;
+        // Функция переключения вкладок (как в Skinoz)
+        function switchScreen(screenName, element) {
+            // Скрываем все экраны
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            // Убираем активный класс у кнопок меню
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+            // Показываем нужный экран и активируем кнопку
+            document.getElementById(`screen-${screenName}`).classList.add('active');
+            element.classList.add('active');
+
+            if(screenName === 'cases') generateTape();
+        }
+
+        // Логика кликера
+        function earnCoins(event) {
+            balance += 0.10;
+            totalClicks++;
+            updateUI();
+
+            // Легкая вибрация при клике
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        }
+
+        function updateUI() {
+            document.getElementById('balance').innerText = balance.toFixed(2);
+            document.getElementById('stat-clicks').innerText = totalClicks;
+            document.getElementById('stat-cases').innerText = totalCasesOpened;
+        }
+
+        // Логика рулетки
         const tape = document.getElementById('tape');
-        const openBtn = document.getElementById('open-btn');
-        const dropResult = document.getElementById('drop-result');
-        const balanceEl = document.getElementById('balance');
-
-        const cardWidth = 100; // 90px + 10px margin
-
-        // Заполняем ленту случайными пушками при старте
         function generateTape() {
             tape.innerHTML = '';
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 40; i++) {
                 const randomItem = items[Math.floor(Math.random() * items.length)];
                 const card = document.createElement('div');
                 card.className = `weapon-card ${randomItem.rarity}`;
-                card.innerHTML = `<img src="${randomItem.img}"><br>${randomItem.name}`;
+                card.innerHTML = `<img src="${randomItem.img || ''}"><br>${randomItem.name}`;
                 tape.appendChild(card);
             }
         }
 
         function openCase() {
             if (balance < casePrice) {
-                alert("Недостаточно баланса!");
+                tg.showAlert("Недостаточно денег! Потапай на первой вкладке 👆");
                 return;
             }
 
             balance -= casePrice;
-            balanceEl.innerText = balance.toFixed(2);
-            openBtn.disabled = true;
-            dropResult.innerText = "";
-
-            // Генерируем новую ленту, чтобы обновить картинки
-            generateTape();
-            
-            // Сбрасываем анимацию
-            tape.style.transition = 'none';
-            tape.style.transform = 'translateX(0px)';
-            
-            // Выбираем победный предмет (пусть будет 35-й в ленте)
-            const winningIndex = 35; 
-            
-            // Шансы: подкрутим так, чтобы нож выпадал редко
-            const roll = Math.random() * 100;
-            let winningItem;
-            if (roll < 70) winningItem = items[Math.floor(Math.random() * 2)]; // Ширпотреб (70%)
-            else if (roll < 90) winningItem = items[2]; // Запрещенка (20%)
-            else if (roll < 97) winningItem = items[3]; // Засекреченное (7%)
-            else if (roll < 99.5) winningItem = items[4]; // Тайное (2.5%)
-            else winningItem = items[5]; // НОЖ! (0.5%)
-
-            // Подменяем 35-ю карточку на наш выигрыш
-            const cards = tape.children;
-            cards[winningIndex].className = `weapon-card ${winningItem.rarity}`;
-            cards[winningIndex].innerHTML = `<img src="${winningItem.img}"><br>${winningItem.name}`;
-
-            // Рассчитываем сдвиг ленты, чтобы выигравший предмет встал по центру
-            // Контейнер 350px, центр — 175px. 
-            const targetLeft = -(winningIndex * cardWidth) + (175 - cardWidth / 2);
-
-            // Запускаем крутилку (через таймаут, чтобы сброс transition успел сработать)
-            setTimeout(() => {
-                tape.style.transition = 'transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)';
-                tape.style.transform = `translateX(${targetLeft}px)`;
-            }, 50);
-
-            // Ждем окончания анимации (4 секунды)
-            setTimeout(() => {
-                openBtn.disabled = false;
-                dropResult.innerText = `Выпало: ${winningItem.name} (${winningItem.price}$)`;
-                
-                // Вибрация в Telegram при выигрыше!
-                if (tg.HapticFeedback) {
-                    tg.HapticFeedback.notificationOccurred(winningItem.rarity === 'special' ? 'success' : 'warning');
-                }
-            }, 4100);
-        }
-
-        // Инициализация при загрузке
-        generateTape();
-    </script>
-</body>
-</html>
+            totalCasesOpened++;
